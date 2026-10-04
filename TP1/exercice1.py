@@ -1,8 +1,8 @@
 
 def counter(nombre):
     count=0
-    while nombre >0 :
-        nombre//=10
+    while nombre > 0 :
+        nombre //= 10
         count+=1
     return count
 
@@ -21,11 +21,11 @@ def chiffres_identiques(nombre):
     unite = nombre % 10
     nombre //= 10
 
-    dizaine = nombre%10
+    dizaine = nombre % 10
     nombre //=10
 
-    centaine = nombre % 10
-    nombre //= 10
+    centaine = nombre
+    
 
     if dizaine == unite :
         if centaine == dizaine :
