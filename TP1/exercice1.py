@@ -14,8 +14,6 @@ def chiffres_identiques(nombre):
         return error
     
 
-
-
     case1 = "sont identiques"
     case2 = "deux identiques"
     case3 = "tous différents"
