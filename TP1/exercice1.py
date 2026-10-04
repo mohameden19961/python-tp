@@ -1,4 +1,3 @@
-
 def counter(nombre):
     count=0
     while nombre > 0 :
