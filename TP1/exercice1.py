@@ -26,7 +26,6 @@ def chiffres_identiques(nombre):
 
     centaine = nombre
     
-
     if dizaine == unite :
         if centaine == dizaine :
             return case1
