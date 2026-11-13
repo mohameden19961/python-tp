@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aïd Moubarak</title>
+    <!-- Police élégante depuis Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,700;1,400&family=Poppins:wght@300;600&display=swap" rel="stylesheet">
+    
+    <style>
+        /* Réinitialisation et fond bleu dégradé */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            height: 100vh;
+            width: 100%;
+            /* Magnifique dégradé de bleu nuit à bleu royal */
+            background: radial-gradient(circle at center, #0a4d8c 0%, #041e42 60%, #020c1b 100%);
+            color: #ffffff;
+            font-family: 'Poppins', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Conteneur des étoiles générées par JS */
+        #stars-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .star {
+            position: absolute;
+            background-color: #ffffff;
+            border-radius: 50%;
+            opacity: 0.8;
+            animation: twinkle infinite alternate ease-in-out;
+        }
+
+        @keyframes twinkle {
+            0% { opacity: 0.2; transform: scale(0.8); }
+            100% { opacity: 1; transform: scale(1.2); box-shadow: 0 0 8px #ffffff; }
+        }
+
+        /* Carte centrale effet verre (Glassmorphism) */
+        .card {
+            position: relative;
+            z-index: 10;
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 24px;
+            padding: 50px 40px;
+            text-align: center;
+            max-width: 550px;
+            width: 90%;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+            animation: float 4s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        /* Croissant de lune en CSS pur */
+        .moon {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            box-shadow: -15px 10px 0 0 #ffffff;
+            margin: 0 auto 25px auto;
+            transform: rotate(-15deg);
+            filter: drop-shadow(0 0 15px rgba(255, 255, 255, 0.6));
+        }
+
+        /* Typographie */
+        .arabic-title {
+            font-family: 'Amiri', serif;
+            font-size: 3.5rem;
+            color: #ffffff;
+            text-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+            margin-bottom: 5px;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 600;
+            letter-spacing: 2px;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+        }
+
+        p {
+            font-size: 1.1rem;
+            font-weight: 300;
+            line-height: 1.6;
+            color: #e0f0ff;
+            margin-bottom: 30px;
+        }
+
+        /* Bouton interactif */
+        .btn {
+            background: #ffffff;
+            color: #041e42;
+            border: none;
+            padding: 14px 32px;
+            font-size: 1rem;
+            font-weight: 600;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(255, 255, 255, 0.3);
+        }
+
+        .btn:hover {
+            transform: scale(1.05);
+            background: #f0f8ff;
+            box-shadow: 0 8px 25px rgba(255, 255, 255, 0.6);
+        }
+
+        .btn:active {
+            transform: scale(0.98);
+        }
+
+        /* Message caché qui apparaît au clic */
+        #blessing-msg {
+            margin-top: 20px;
+            font-weight: 600;
+            font-size: 1.05rem;
+            color: #ffd700; /* Touche dorée festive */
+            opacity: 0;
+            transition: opacity 0.6s ease;
+        }
+
+        /* Particules de célébration */
+        .confetti {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background-color: #ffd700;
+            z-index: 20;
+            pointer-events: none;
+            border-radius: 50%;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Arrière-plan étoilé -->
+    <div id="stars-container"></div>
+
+    <!-- Carte principale -->
+    <div class="card">
+        <div class="moon"></div>
+        <div class="arabic-title">عيد مبارك</div>
+        <h1>Aïd Moubarak</h1>
+        <p>
+            Que cette journée bénie vous apporte la paix, la joie, la santé et la prospérité, à vous ainsi qu'à tous vos proches.
+        </p>
+        <button class="btn" onclick="celebrate()">Envoyer mes vœux ✨</button>
+        <div id="blessing-msg">Taqabbal Allahu minna wa minkum ! 🌙</div>
+    </div>
+
+    <script>
+        // 1. Génération des étoiles scintillantes en arrière-plan
+        const starsContainer = document.getElementById('stars-container');
+        const numberOfStars = 80;
+
+        for (let i = 0; i < numberOfStars; i++) {
+            const star = document.createElement('div');
+            star.classList.add('star');
+            
+            // Taille et position aléatoires
+            const size = Math.random() * 3 + 1;
+            star.style.width = `${size}px`;
+            star.style.height = `${size}px`;
+            star.style.top = `${Math.random() * 100}%`;
+            star.style.left = `${Math.random() * 100}%`;
+            
+            // Durée d'animation aléatoire
+            star.style.animationDuration = `${Math.random() * 3 + 1.5}s`;
+            star.style.animationDelay = `${Math.random() * 2}s`;
+            
+            starsContainer.appendChild(star);
+        }
+
+        // 2. Animation de célébration au clic sur le bouton
+        function celebrate() {
+            // Afficher le message de bénédiction
+            const msg = document.getElementById('blessing-msg');
+            msg.style.opacity = '1';
+
+            // Créer une pluie de particules blanches et dorées
+            for (let i = 0; i < 60; i++) {
+                createParticle();
+            }
+        }
+
+        function createParticle() {
+            const particle = document.createElement('div');
+            particle.classList.add('confetti');
+            
+            // Alterner entre blanc et or
+            particle.style.backgroundColor = Math.random() > 0.5 ? '#ffffff' : '#ffd700';
+            
+            // Position de départ au centre de l'écran
+            particle.style.left = '50%';
+            particle.style.top = '50%';
+            
+            document.body.appendChild(particle);
+
+            // Direction aléatoire d'explosion
+            const angle = Math.random() * Math.PI * 2;
+            const velocity = Math.random() * 250 + 50;
+            const tx = Math.cos(angle) * velocity;
+            const ty = Math.sin(angle) * velocity;
+
+            // Animation fluide via Web Animations API
+            const animation = particle.animate([
+                { transform: 'translate(0, 0) scale(1)', opacity: 1 },
+                { transform: `translate(${tx}px, ${ty}px) scale(0)`, opacity: 0 }
+            ], {
+                duration: Math.random() * 1000 + 800,
+                easing: 'cubic-bezier(0, .9, .57, 1)'
+            });
+
+            // Nettoyer l'élément une fois l'animation terminée
+            animation.onfinish = () => particle.remove();
+        }
+    </script>
+</body>
+</html>
